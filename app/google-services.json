@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "17686526443",
+    "firebase_url": "https://potholedetector-33b99.firebaseio.com",
+    "project_id": "potholedetector-33b99",
+    "storage_bucket": "potholedetector-33b99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17686526443:android:781bfdb9563407db8001ae",
+        "android_client_info": {
+          "package_name": "com.example.potholedetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17686526443-shd2obd4t820chje38tctvech5spv28p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.potholedetector",
+            "certificate_hash": "9a5e631b40038d7cd3132bc48153dee70e7d6968"
+          }
+        },
+        {
+          "client_id": "17686526443-ojr83v5bd916cquch12lqpn0eqq4gmmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBl455Nu4KkY5toVn4frkNpRCb8xvJnAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17686526443-ojr83v5bd916cquch12lqpn0eqq4gmmi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
