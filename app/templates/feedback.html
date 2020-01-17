@@ -2,26 +2,21 @@
 {% block content %}
 <style>
     .card {
-        margin-left: 10%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 40%;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-  padding: 2px 16px;
-}
-
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+    .jumbotron {
+        margin: 1% 3%;
+        padding: 1%;
+    }
 </style>
-<div class="card">
-    <div class="container">
-      <h4><b>John Doe</b></h4> 
-      <p>Architect & Engineer</p> 
+<div class="jumbotron">
+<div class="card" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     </div>
   </div>
-
+</div>
 {% endblock %}
