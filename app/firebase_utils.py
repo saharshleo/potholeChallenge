@@ -7,6 +7,7 @@ firebase_admin.initialize_app(cred, {
 })
 
 def get_firebase_db(dict_index):
+    print("downloading db from index")
     return db.reference(dict_index).get()
 
 def get_firebase_storage():
@@ -15,6 +16,7 @@ def get_firebase_storage():
     image_bytearray_dict = {}
 
     for blob in bucket.list_blobs():
+        print("downloading {} from storage".format(blob.name))
         image_bytearray_dict.update({blob.name : blob.download_as_string()})
 
     return image_bytearray_dict
