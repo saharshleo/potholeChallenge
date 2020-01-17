@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
-
+    <style>
+        .input-field {
+            margin: 5px 0;
+        }
+    </style>
 	<section class="container section" id="login">
         <div class="row">
             <div class="col s12 l10 offset-l1">
@@ -20,6 +24,36 @@
                                             <i class="material-icons prefix">email</i>
                                             <input placeholder="Email"type="email" id="pat_email" name="{{form_admin.email.name}}">
                                             <!-- <label for="pat_email">Email</label> -->
+                                        </div>
+                                        <div class="input-field">
+                                            <i class = "material-icons prefix">location_on</i>
+                                            <!-- <select name="cars">
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="fiat" selected>Fiat</option>
+                                                <option value="audi">Audi</option>
+                                              </select> -->
+                                            <select name="Location">
+                                                <option value="Bangalore">Bangalore</option>
+                                                <option value="Chennai">Chennai</option>
+                                                <option value="Mumbai" selected>Mumbai</option>
+                                                <option value="Kolkata">Kolkata</option>
+                                                <option value="Chandigarh">Chandigarh</option>
+                                                <option value="Jaipur">Jaipur</option>
+                                                <option value="Patna">Patna</option>
+                                                <option value="Guwahati">Guwahati</option>
+                                                <option value="Hyderabad">Hyderabad</option>
+                                                <option value="Gandhinagar">Gandhinagar</option>
+                                                <option value="Bhubaneshwar">Bhubaneshwar</option>
+                                                <option value="Bhopal">Bhopal</option>
+                                                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                                <option value="Lucknow">Lucknow</option>
+                                                <option value="Varanasi">Varanasi</option>
+                                                <option value="Raipur">Raipur</option>
+                                                <option value="Shimla">Shimla</option>
+                                                <option value="Surat">Surat</option>
+                                                <option value="Dehradun">Dehradun</option>
+                                            </select>
                                         </div>
                                         <div class="input-field">
                                             <i class="material-icons prefix">vpn_key</i>

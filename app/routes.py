@@ -61,7 +61,7 @@ def register_admin():
     form_admin = AdminRegistrationForm()
 
     if 1 or form_admin.validate_on_submit():
-        admin = Admin(name = form_admin.name.data, email = form_admin.email.data)
+        admin = Admin(name = form_admin.name.data, email = form_admin.email.data, location = form_admin.location.data)
         admin.set_password(form_admin.password.data)
 
         db.session.add(admin)
