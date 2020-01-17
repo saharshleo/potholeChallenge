@@ -29,14 +29,18 @@
         header {
             margin-bottom: 5%;
         }
+        nav {
+            background: rgb(2,0,36);
+background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,121,9,1) 35%, rgba(0,212,255,1) 100%);
+        }
     </style>
 </head>
 
 <body>
     <!-- navbar -->
     <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-            <a class="navbar-brand" href="/">Navbar</a>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-light fixed-top">
+            <a class="navbar-brand" href="/"><i class="material-icons">directions_car</i></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,7 +48,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated  %}
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/report">View report <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">

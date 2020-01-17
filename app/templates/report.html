@@ -14,11 +14,11 @@
                 yValueFormatString: "##0.00\"%\"",
                 indexLabel: "{label} {y}",
                 dataPoints: [
-                    { y: 79.45, label: "Google" },
-                    { y: 7.31, label: "Bing" },
-                    { y: 7.06, label: "Baidu" },
-                    { y: 4.91, label: "Yahoo" },
-                    { y: 1.26, label: "Others" }
+                    { y: 40, label: "Mumbai" },
+                    { y: 20, label: "Bangalore" },
+                    { y: 7.06, label: "Raipur" },
+                    { y: 4.91, label: "Goa" },
+                    { y: 28.03, label: "Others" }
                 ]
             }]
         });
@@ -26,17 +26,23 @@
 
     }
 </script>
-<style>`
+<style>
     #ch {
         vertical-align: text-top;
     }
+
     img {
         margin-top: 5%;
         margin-left: 3%;
     }
+
     .card {
         padding: 1%;
     }
+
+    /* body {
+        background: rgb(2,0,36);
+    } */
 </style>
 <table>
     <tr>
@@ -53,7 +59,7 @@
                                 <hr>
                                 <p class="card-text">Number of reports: </p>
                                 <p class="card-text">First reported on: </p>
-                                <p class="card-text">Status: <span style="color: red;">Unresolved</span></p>
+                                <p id="status" class="card-text">Status: <span style="color: red;">Unresolved</span></p>
                             </div>
                         </div>
 
@@ -67,4 +73,10 @@
     </tr>
 </table>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    document.querySelectorAll("p span")[0].addEventListener("click", function () {
+        document.querySelectorAll("p span")[0].style.color = "green";
+        document.querySelectorAll("p span")[0].innerText = "Resolved";
+    });
+</script>
 {% endblock %}
