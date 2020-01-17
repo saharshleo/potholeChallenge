@@ -7,6 +7,7 @@ from app.models import Admin
 from app.firebase_utils import get_firebase_db, get_firebase_storage
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
+from textblob import TextBlob
 
 @app.route('/', methods=['GET'])
 @app.route('/home')
@@ -62,7 +63,7 @@ def register_admin():
     form_admin = AdminRegistrationForm()
 
     if 1 or form_admin.validate_on_submit():
-        admin = Admin(name = form_admin.name.data, email = form_admin.email.data)
+        admin = Admin(name = form_admin.name.data, email = form_admin.email.data, location = form_admin.location.data)
         admin.set_password(form_admin.password.data)
 
         db.session.add(admin)
@@ -89,4 +90,12 @@ def feedback():
     for i in feedback_db.values():
         feedback_list.append([i['city'], i['feed']])
 
-    return render_template('feedback.html', feedback_list = feedback_list, title = "Feedbacks")
+    positive , negative = [] , []
+    for i in feedback_list:
+        print(current_user.location)
+        if current_user.location.lower() == i[0].lower() :
+            positive.append(i) if TextBlob(i[1]).sentiment.polarity>0 and TextBlob(i[1]).sentiment.subjectivity>0 else negative.append(i)
+        else :
+            ...
+
+    return render_template('feedback.html',positive=positive,negative=negative, title = "Feedbacks")
