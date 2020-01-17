@@ -8,7 +8,11 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
   <!-- <link rel="stylesheet" href="language.css"> -->
   <title>HealthSync-{{title}}</title>
@@ -19,40 +23,69 @@
 <body>
 <!-- navbar -->
     <header>
-    <div class="navbar-fixed">
-        <nav class="nav-wrapper indigo lighten-2">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                {% if current_user.is_authenticated  %}
+
+                <li class="nav-item active">
+                  <a class="nav-link" href="/report">View report <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/feedback">View Feedback</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Log In</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register">Sign Up</a>
+                  </li>
+                  {%endif%}
+              </ul>
+            </div>
+          </nav>
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a href="/home" class="sidenav-trigger" data-target="mobile-menu">
+                 <a href="/home" class="sidenav-trigger" data-target="mobile-menu">
                     <i class="material-icons">menu</i>
                 </a>
-                <ul class="right hide-on-med-and-down">
-                    {% if current_user.is_authenticated  %}
-                        <li><a href="/logout">Logout</a></li>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        {% if current_user.is_authenticated  %}
+
+                      <li class="nav-item active"><a href="/report">View report</a></li>
+                    <li class="nav-item"><a href="/feedback">View feedback</a></li>    
+                    <li class="nav-item"></li><a href="/logout">Logout</a></li>
+                        
                     {% else %}
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/register">Sign Up</a></li>
+                    <li class="nav-item"><a href="/login">Login</a></li>
+                    <li class="nav-item"><a href="/register">Sign Up</a></li>
                     {% endif %}    
                     
                 </ul>
-                <ul class="sidenav grey lighten-2" id="mobile-menu">
-                        <li><a href="/about">About</a></li>
+                <ul class="collapse navbar-sollapse" id="mobile-menu">
+                    <li class="nav-item"><a href="/about">About</a></li>
                         {% if current_user.is_authenticated  %}
-                            <li>{{current_user.name}}</li>
+                        <li class="nav-item">{{current_user.name}}</li>
                             {% if current_user.role == "d" %}
-                            <li><a href="/view_patient_history">Patient History</a></li>
                             {% else %}
-                            <li><a href="/generate_otp">Generate OTP</a></li>
                             {% endif %}
-                            <li><a href="/profile">Profile</a></li>
-                            <li><a href="/logout">Logout</a></li>
+                            <li class="nav-item"><a href="/logout">Logout</a></li>
                         {% else %}
-                            <li><a href="/login">Login</a></li>
-                            <li><a href="/register">Sign Up</a></li>
+                        <li class="nav-item"><a href="/login">Login</a></li>
+                        <li class="nav-item"><a href="/register">Sign Up</a></li>
                         {% endif %}
                 </ul>
             </div>
-        </nav>
-        </div>
+        </nav> -->
     </header>
 
 {% block content %}
