@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+	<section class="container section" id="login">
+        <div class="row">
+            <div class="col s12 l10 offset-l1">
+
+
+                <ul class="tabs">
+                    <li class="tab col s6">
+                        <a href="#patient_signup" class="indigo-text text-darken-4">Patient signup</a>
+                    </li>
+                    <li class="tab col s6">
+                        <a href="#doctor_signup" class="indigo-text text-darken-4">Doctor signup</a>
+                    </li>
+                </ul>
+
+
+                <!-- Patient Signup -->
+                <div class="col s12">
+                    <div class="col s12" id="patient_signup">
+                        <p class="flow-text indigo-text text-darken-4">Patients here</p>
+                        <section class="section container" id="Sign in">
+                            <div class="row">
+                                <div class="col s12 l10">
+                                    <form action="/register_admin" method="post">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">perm_identity</i>
+                                            <input type="text" id="pat_name" name="{{form_admin.name.name}}">
+                                            <label for="pat_name">Your name</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">email</i>
+                                            <input type="email" id="pat_email" name="{{form_admin.email.name}}">
+                                            <label for="pat_email">Email</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">vpn_key</i>
+                                            <input type="password" id="pat_pass" name="{{form_admin.password.name}}">
+                                            <label for="pat_pass">Password</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">vpn_key</i>
+                                            <input type="password" id="pat_con" name="{{form_admin.confirm_password.name}}">
+                                            <label for="pat_con">Confirm password</label>
+                                        </div>
+
+                                        
+
+                                        <div class="input-field center">
+                                            <button class="btn">Sign up</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+{% endblock %}

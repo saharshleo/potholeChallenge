@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!--Login tabs-->
+    <section class="container section" id="login">
+        <div class="row">
+            <div class="col s12 l10 offset-l1">
+                <ul class="tabs">
+                    <li class="tab col s6">
+                        <a href="#admin_signin" class="indigo-text text-darken-4">Admin Sign in</a>
+                    </li>
+                </ul>
+                <div class="col s12">
+                    <div class="col s12" id="admin_signin">
+                        <p class="flow-text indigo-text text-darken-4">Admin signin</p>
+                        <section class="section container" id="Sign in">
+                            <div class="row">
+                                <div class="col s12 l10">
+
+                                    <!-- Login Form -->
+                                    <form action="/login_admin" method="post">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">email</i>
+                                            <input type="email" id="admin_email" name="{{form_admin.email.name}}">
+                                            <label for="admin_email">Your email</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">vpn_key</i>
+                                            <input type="password" id="admin_password" class="validate" name="{{form_admin.password.name}}">
+                                            <label for="admin_password">Password</label>
+                                        </div>
+                                        <div class="input-field center">
+                                            <button class="btn" id="admin_login">Login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
