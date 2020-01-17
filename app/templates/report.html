@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+    .card {
+        margin-top: 1%;
+        margin-left: 10%;
+        width: 100%;
+    }
+</style>
+<div>
+<div class="card" style="width: 50%;">
+    <div class="card-body">
+        <h5 class="card-title">Report Number:</h5>
+      </div>
+    <table>
+        <tr>
+            <td>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Location:</li>
+                    <li class="list-group-item">Number of Reports: </li>
+                    <li class="list-group-item">First Reproted On: </li>
+                  </ul>
+            </td>
+            <td>
+                <img class="card-img-top" src="/static/p.jpg" alt="Card image cap" style="width: 100%; height: 100%;">
+
+            </td>
+        </tr>
+        
+   
+</table>
+  </div>
+<!-- <style>
+    .card {
+        margin-left: 10%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+</style>
+<div class="card">
+    <img src="/static/p.jpg" alt="Avatar" style="width:150px;">
+    <div class="container">
+      <h4><b>John Doe</b></h4> 
+      <p>Architect & Engineer</p> 
+    </div>
+  </div> -->
+
+{% endblock %}
