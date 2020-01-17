@@ -77,8 +77,15 @@ def register_admin():
 @login_required
 @app.route('/report')
 def report():
-    
-    return render_template('report.html', title = "Reports")
+    userreport_db = get_firebase_db('/Users-Potholes')
+    imagereport_db = get_firebase_storage()
+
+    report_list = []
+
+    for i in userreport_db.keys():
+        report_list.append([userreport_db[i]['i'], userreport_db[i]['lat'], userreport_db[i]['log'], imagereport_db[i]])
+
+    return render_template('report.html', report_list = report_list, title = "Reports")
 
 @login_required
 @app.route('/feedback')
