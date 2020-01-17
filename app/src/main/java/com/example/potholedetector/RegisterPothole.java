@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -37,19 +39,23 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterPothole extends AppCompatActivity {
     Button buttonRegister;
-    Button buttonConfirm;
+    Button buttonConfirm,buttonFeedBack;
     ImageView imageView;
     Intent intent;
     public static final int RequestPermissionCode = 1;
     StorageReference firebaseStorage;
     Bitmap bitmap;
     FirebaseAuth firebaseAuth;
-    Uri file;
+    public Uri file;
+    public Uri f_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +65,9 @@ public class RegisterPothole extends AppCompatActivity {
         buttonRegister = (Button) findViewById(R.id.btn_register_pothole);
         imageView = (ImageView) findViewById(R.id.clicked_image);
         buttonConfirm = (Button)findViewById(R.id.btn_confirm_register);
+        buttonFeedBack = (Button)findViewById(R.id.btn_feedback);
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseStorage = FirebaseStorage.getInstance().getReference(firebaseAuth.getCurrentUser().getEmail());
+        firebaseStorage = FirebaseStorage.getInstance().getReference(firebaseAuth.getCurrentUser().getUid());
         //EnableRuntimePermission();
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -77,251 +84,81 @@ public class RegisterPothole extends AppCompatActivity {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmImage(file);
+                confirmImage();
+            }
+        });
+
+        buttonFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),FeedBackForm.class));
             }
         });
     }
 
-    private void confirmImage(final Uri file) {
-        final String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] array = baos.toByteArray();
+    private void confirmImage() {
         final RequestQueue queue = Volley.newRequestQueue(this);
         final StorageReference upload = firebaseStorage.child(firebaseAuth.getCurrentUser().getEmail());
-        final UploadTask uploadTask = (UploadTask) firebaseStorage.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final UploadTask uploadTask;
+        /*uploadTask = (UploadTask) firebaseStorage.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(RegisterPothole.this,"Sucessfully registered",Toast.LENGTH_SHORT).show();
-//                upload.child(firebaseAuth.getCurrentUser().getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                   // @Override
-//                   // public void onSuccess(final Uri uri) {
-//                        // Got the download URL for 'users/me/profile.png'
-//                        Log.d("Uri",file.toString());
-//                        StringRequest sr = new StringRequest(Request.Method.GET,"https://api.github.com/users", new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                Toast.makeText(RegisterPothole.this,response,Toast.LENGTH_LONG).show();
-//                                /*try {
-//                                    JSONObject jsonObject = new JSONObject(response);
-//                                    final String val = jsonObject.getString("res_pothole");
-//                                    if(val=="1"){
-//                                        startActivity(new Intent(RegisterPothole.this,ShowMap.class));
-//                                    }else{
-//                                        Toast.makeText(RegisterPothole.this,"NOT A POTHOLE!!",Toast.LENGTH_LONG).show();
-//                                    }
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                } */
-//
-//                            }
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(RegisterPothole.this,error.toString(),Toast.LENGTH_LONG).show();
-//                            }
-//                        }){
-//                            @Override
-//                            protected Map<String,String> getParams(){
-//                                Map<String,String> params = new HashMap<String, String>();
-//                                params.put("uri",file.toString());
-//                                return params;
-//                            }
-//
-//                            @Override
-//                            public Map<String, String> getHeaders() throws AuthFailureError {
-//                                Map<String,String> params = new HashMap<String, String>();
-//                                params.put("Content-Type","application/x-www-form-urlencoded");
-//                                return params;
-//                            }
-//                        };
-//                        queue.add(sr);
-//
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        // Handle any errors
-//                        Toast.makeText(RegisterPothole.this,"hey",Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(RegisterPothole.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-//            }
-//        });  /* http://bcf44683.ngrok.io/predict/ */
 
-                /*StringRequest sr = new StringRequest(Request.Method.POST,"http://bcf44683.ngrok.io/predict/", new Response.Listener<String>() {
+            }
+        } */
+
+
+        uploadTask = (UploadTask)firebaseStorage.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("url","https://scx1.b-cdn.net/csz/news/800/2018/potholeshowe.jpg");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,"http://bcf44683.ngrok.io/predict/",obj,
+                        new Response.Listener<JSONObject>() {
                             @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(RegisterPothole.this,response,Toast.LENGTH_LONG).show();
+                            public void onResponse(JSONObject response) {
+                                System.out.println(response);
                                 try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    final String val = jsonObject.getString("res_pothole");
-                                    if(val=="1"){
-                                        startActivity(new Intent(RegisterPothole.this,ShowMap.class));
+                                    //Toast.makeText(getApplicationContext(),response.getString("is_pothole"),Toast.LENGTH_LONG).show();
+                                    if(response.getInt("is_pothole") == 1){
+                                       // startActivity(new Intent(RegisterPothole.this,ShowMaps.class));
+                                        Toast.makeText(getApplicationContext(),"It is a pothole",Toast.LENGTH_LONG).show();
+                                    }else if(response.getInt("is_pothole") == 0){
+                                        Toast.makeText(getApplicationContext(),"Not a pothole",Toast.LENGTH_LONG).show();
                                     }else{
-                                        Toast.makeText(RegisterPothole.this,"NOT A POTHOLE!!",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(),response.getString("is_pothole"),Toast.LENGTH_LONG).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
+                                Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                             }
-                        }, new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(RegisterPothole.this,error.toString(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
                             }
-                        })
-                        {
-                            public String getBodyContentType() {
-                                return "application/json; charset=utf-8";
-                            }
-                            @Override
-                            protected Map<String,String> getParams(){
-                                Map<String,String> params = new HashMap<String, String>();
-                                params.put("url","https://ichef.bbci.co.uk/news/410/cpsprodpb/B5F1/production/_106177564_pothole.jpg");
-                                try {
-                                    return super.getParams();
-                                } catch (AuthFailureError authFailureError) {
-                                    authFailureError.printStackTrace();
-                                    return params;
-                                }
-                            }
+                        });
+                queue.add(jsObjRequest);
 
-                            @Override
-                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                Map<String,String> params = new HashMap<String, String>();
-                                params.put("Content-Type","application/x-www-form-urlencoded");
-                                return params;
-                            }
-                        };
-                        queue.add(sr); */
-
-                try {
-                    RequestQueue requestQueue = Volley.newRequestQueue(RegisterPothole.this);
-                    String URL = "https://bcf44683.ngrok.io/predict/";
-                    final JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("url", "https://ichef.bbci.co.uk/news/410/cpsprodpb/B5F1/production/_106177564_pothole.jpg");
-                    final String requestBody = jsonBody.toString();
-
-                    JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, URL, null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Log.d("Reached 1","heyya 1");
-                                Log.d("Reached 2","heyya 2");
-                                String ans = response.getString("is_pothole");
-                                Log.d("Reached 3","heyya 3");
-                                Toast.makeText(RegisterPothole.this,ans,Toast.LENGTH_LONG).show();
-                                if(ans=="1"){
-                                    startActivity(new Intent(getApplicationContext(),ShowMap.class));
-                                }else{
-                                    Toast.makeText(RegisterPothole.this,"Error",Toast.LENGTH_LONG).show();
-                                }
-                            } catch (JSONException e) {
-                                Toast.makeText(RegisterPothole.this,"FUCK YOUUU",Toast.LENGTH_LONG).show();
-                                e.printStackTrace();
-                            }
-
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("VOLLEY", error.toString());
-                        }
-                    }) ;/* {
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset=utf-8";
-                        }
-
-                        @Override
-                        public byte[] getBody() {
-                            try {
-                                return requestBody == null ? null : requestBody.getBytes("utf-8");
-                            } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                                return null;
-                            }
-                        }
-
-                        @Override
-                        protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                            String responseString = "";
-                            if (response != null) {
-                                responseString = String.valueOf(response.statusCode);
-                                // can get more details such as response.headers
-                            }
-                            return Response.success((response.statusCode), HttpHeaderParser.parseCacheHeaders(response));
-
-                        }
-                    }; */
-
-                    requestQueue.add(stringRequest);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                        Toast.makeText(RegisterPothole.this,"hey",Toast.LENGTH_SHORT).show();
-                    }
-                });
+            }
+        });
 
     }
 
 
-            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-                if (requestCode == 69 && resultCode == RESULT_OK) {
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                    imageView.setImageBitmap(bitmap);
-                    file  = data.getData();
+        if (requestCode == 69 && resultCode == RESULT_OK) {
+            bitmap = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(bitmap);
+            file = data.getData();
         }
     }
-
-    public void EnableRuntimePermission() {
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterPothole.this, Manifest.permission.CAMERA)) {
-
-            Toast.makeText(RegisterPothole.this, "CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
-
-        } else {
-
-            ActivityCompat.requestPermissions(RegisterPothole.this, new String[]{
-                    Manifest.permission.CAMERA}, RequestPermissionCode);
-
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
-
-        switch (RC) {
-
-            case RequestPermissionCode:
-
-                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Toast.makeText(RegisterPothole.this, "Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
-
-                } else {
-
-                    Toast.makeText(RegisterPothole.this, "Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
-
-                }
-                break;
-        }
-    }
-
 }

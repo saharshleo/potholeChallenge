@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="spinnerItems">
+            <item>Bangalore</item>
+            <item>Chennai</item>
+            <item>Mumbai</item>
+            <item>Kolkata</item>
+            <item>Chandigarh</item>
+            <item>Jaipur</item>
+            <item>Patna</item>
+            <item>Guwahati</item>
+            <item>Hyderabad</item>
+            <item>Gandhinagar</item>
+            <item>Bhubaneshwar</item>
+            <item>Bhopal</item>
+            <item>Thiruvananthpuram</item>
+            <item>Lucknow</item>
+            <item>Varanasi</item>
+            <item>Raipur</item>
+            <item>Dehradun</item>
+            <item>Shimla</item>
+            <item>Surat</item>
+        </string-array>
+</resources>
