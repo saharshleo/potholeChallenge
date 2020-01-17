@@ -48,14 +48,6 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route('/report')
-def report():
-    return render_template('report.html', title = "Reports")
-
-@app.route('/feedback')
-def feedback():
-    return render_template('feedback.html', title = "Feedbacks")
-
 @app.route('/register',methods=['GET'])
 def register():
     if current_user.is_authenticated:
@@ -79,3 +71,11 @@ def register_admin():
         flash("error in signing up")
 
     return redirect(url_for('home'))    
+
+@app.route('/report')
+def report():
+    return render_template('report.html', title = "Reports")
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html', title = "Feedbacks")
