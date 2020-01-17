@@ -1,34 +1,23 @@
 package com.example.potholedetector;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,14 +25,6 @@ import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterPothole extends AppCompatActivity {
     Button buttonRegister;
@@ -91,7 +72,7 @@ public class RegisterPothole extends AppCompatActivity {
         buttonFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),FeedBackForm.class));
+                startActivity(new Intent(getApplicationContext(),ShowMaps.class));
             }
         });
     }
@@ -126,7 +107,7 @@ public class RegisterPothole extends AppCompatActivity {
                                 try {
                                     //Toast.makeText(getApplicationContext(),response.getString("is_pothole"),Toast.LENGTH_LONG).show();
                                     if(response.getInt("is_pothole") == 1){
-                                       // startActivity(new Intent(RegisterPothole.this,ShowMaps.class));
+                                        startActivity(new Intent(RegisterPothole.this,ShowMaps.class));
                                         Toast.makeText(getApplicationContext(),"It is a pothole",Toast.LENGTH_LONG).show();
                                     }else if(response.getInt("is_pothole") == 0){
                                         Toast.makeText(getApplicationContext(),"Not a pothole",Toast.LENGTH_LONG).show();

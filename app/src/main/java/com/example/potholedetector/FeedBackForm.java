@@ -1,5 +1,6 @@
 package com.example.potholedetector;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +42,7 @@ public class FeedBackForm extends AppCompatActivity {
                 feedBack = editText.getText().toString();
                 city = spinner.getSelectedItem().toString();
                 firebaseAuth = FirebaseAuth.getInstance();
-                firebaseDatabase = FirebaseDatabase.getInstance().getReference(firebaseAuth.getUid());
+                firebaseDatabase = FirebaseDatabase.getInstance().getReference("Users-Feedback");
                 firebaseDatabase.child(firebaseDatabase.push().getKey()).setValue(new FeedBack(feedBack,city)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -53,4 +57,5 @@ public class FeedBackForm extends AppCompatActivity {
             }
         });
     }
+
 }
