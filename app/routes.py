@@ -4,6 +4,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from datetime import datetime
 from app.forms import AdminRegistrationForm, LoginForm
 from app.models import Admin
+from app.firebase_utils import get_firebase_db, get_firebase_storage
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 
@@ -61,7 +62,7 @@ def register_admin():
     form_admin = AdminRegistrationForm()
 
     if 1 or form_admin.validate_on_submit():
-        admin = Admin(name = form_admin.name.data, email = form_admin.email.data, location = form_admin.location.data)
+        admin = Admin(name = form_admin.name.data, email = form_admin.email.data)
         admin.set_password(form_admin.password.data)
 
         db.session.add(admin)
@@ -72,10 +73,20 @@ def register_admin():
 
     return redirect(url_for('home'))    
 
+@login_required
 @app.route('/report')
 def report():
+    
     return render_template('report.html', title = "Reports")
 
+@login_required
 @app.route('/feedback')
 def feedback():
-    return render_template('feedback.html', title = "Feedbacks")
+
+    feedback_db = get_firebase_db('/Users-Feedback')
+    feedback_list = []
+    
+    for i in feedback_db.values():
+        feedback_list.append([i['city'], i['feed']])
+
+    return render_template('feedback.html', feedback_list = feedback_list, title = "Feedbacks")
