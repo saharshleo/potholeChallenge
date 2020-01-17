@@ -7,12 +7,12 @@ from app.models import Admin
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 
-@app.route('/', methods=['GET'])
-@app.route('/home')
-def home():
-    return render_template('home.html', title='Home')
+# @app.route('/', methods=['GET'])
+# @app.route('/home')
+# def home():
+#     return render_template('home.html', title='Home')
 
-@app.route('/login', methods=['GET'])
+@app.route('/', methods=['GET'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
