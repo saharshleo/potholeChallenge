@@ -39,7 +39,13 @@
     .card {
         padding: 1%;
     }
+    button {
+        margin-left: 3%;
+        /* height: 25px; */
+        font-size: small;
+        text-align: center;
 
+    }
     /* body {
         background: rgb(2,0,36);
     } */
@@ -47,6 +53,7 @@
 <table>
     <tr>
         <td>
+            {% for x in report_list %}
             <div class="container py-3">
                 <div class="card">
                     <div class="row ">
@@ -55,17 +62,17 @@
                         </div>
                         <div class="col-md-8 px-3">
                             <div class="card-block px-3">
-                                <h4 class="card-title">Location: </h4>
+                                <h5 class="card-title">Location: {{x[1]}} {{x[2]}} - {{x[3]}}, {{x[4]}}</h5>
                                 <hr>
-                                <p class="card-text">Number of reports: </p>
-                                <p class="card-text">First reported on: </p>
-                                <p id="status" class="card-text">Status: <span style="color: red;">Unresolved</span></p>
+                                <p class="card-text">Number of reports: {{x[0]}}</p>
+                                <p id="status" class="card-text">Status: <span style="color: red;">Unresolved</span><button type = "button" class = "btn btn-secondary">Send to engineer</button></p>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </td>
         <td id="ch" style="width: 40%;">
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
@@ -74,9 +81,12 @@
 </table>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-    document.querySelectorAll("p span")[0].addEventListener("click", function () {
-        document.querySelectorAll("p span")[0].style.color = "green";
-        document.querySelectorAll("p span")[0].innerText = "Resolved";
-    });
+    h = document.querySelectorAll("p span");
+    for (var i = 0; i < h.length; i++) {
+        h[i].addEventListener("click", function () {
+            this.style.color = "green";
+            this.innerText = "Resolved";
+        })
+    }
 </script>
 {% endblock %}

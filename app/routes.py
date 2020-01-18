@@ -8,6 +8,8 @@ from app.firebase_utils import get_firebase_db, get_firebase_storage
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 from textblob import TextBlob
+import reverse_geocoder as rg
+
 
 @app.route('/', methods=['GET'])
 @app.route('/home')
@@ -83,9 +85,15 @@ def report():
     report_list = []
 
     for i in userreport_db.keys():
-        report_list.append([userreport_db[i]['i'], userreport_db[i]['lat'], userreport_db[i]['log'], imagereport_db[i]])
+        freq = userreport_db[i]['i']
+        loc = rg.search((userreport_db[i]['lat'], userreport_db[i]['log']))[0]
+        name = loc['name']
+        state = loc['admin1']
+        report_list.append([freq, name, state, userreport_db[i]['lat'], userreport_db[i]['log'],imagereport_db[i]])
 
+    
     return render_template('report.html', report_list = report_list, title = "Reports")
+
 
 @login_required
 @app.route('/feedback')
